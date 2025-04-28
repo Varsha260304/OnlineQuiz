@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Category Master</title>
+<style>
+    body {
+    font-family: Poppins, sans-serif;
+    margin: 70px; /* Remove default margin */
+    padding: 10px; /* Remove default padding */
+    border: 5px solid #3c3333bf; /* Add border around the body */
+    box-sizing: border-box; /* Include border in total width/height */
+    border-radius: 20px;
+    margin-left: 150px;
+    margin-right: 700px;
+    background: url('background/books/screen3.jpg.') no-repeat; /* Background image for body */
+    background-size: cover; /* Background image covers the entire body */
+    background-position: center; /* Background image centered */
+}
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        font-size: 20px;
+    }
+    .box {
+        margin-bottom: 20px;
+    }
+    .box label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .box input[type="text"] {
+        width: 350px;
+        padding: 10px;
+        border: 1px solid #000000;
+        border-radius: 25px;
+    }
+    .custom-btn {
+        width: 100px; /* Adjust button width */
+        height: 50px; /* Adjust button height */
+        border-radius: 25px; /* Adjust border-radius to change button shape */
+        background-color: #3c3333bf; /* Button background color */
+        color: white; /* Button text color */
+        border: none; /* Remove button border */
+        text-align: center; /* Center text within the button */
+        text-decoration: none; /* Remove underline from button */
+        font-size: 19px; /* Button text font size */
+        display: block; /* Display as block to take full width */
+        margin: auto; /* Center the button horizontally */
+    }
+
+    .custom-btn:hover {
+        background-color: #000000; /* Change background color on hover */
+    }
+    .required {
+    color: red; /* You can change the color to match your design */
+    float: center top; /* Add some space between the label and the asterisk */
+}
+</style>
+<script>
+    function validateForm() {
+        var categoryName = document.getElementById('categoryName').value;
+        var categoryDesc = document.getElementById('categoryDesc').value;
+        var categoryCode = document.getElementById('categoryCode').value;
+
+        if (categoryName === '' ) {
+            alert('Please enter the Category Name');
+            document.getElementById("categoryName").focus();
+            return false; // Prevent form submission
+        }
+        else if ( categoryDesc === '') {
+            alert('Please enter the Category Description');
+            document.getElementById("categoryDesc").focus();
+            return false;
+        }
+        else if (categoryCode === '') {
+            alert('Please enter the Category Code');
+            document.getElementById("categoryCode").focus();
+        }
+        else {
+            return true;
+        }
+
+        // Add more validation rules as needed
+
+         // Allow form submission
+    }
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>Category Master</h1>
+        <div class="box">
+            <label for="categoryName">Category Name:<span class="required">*</span></label>  
+            <input type="text" id="categoryName" name="categoryName">
+        </div>
+        <div class="box">
+            <label for="categoryDesc">Category Description:<span class="required">*</span></label>
+            
+            <input type="text" id="categoryDesc" name="categoryDesc">
+        </div>
+        <div class="box">
+            <label for="categoryCode">Category Code:<span class="required">*</span></label>
+            <input type="text" id="categoryCode" name="categoryCode">
+        </div>
+        <input type="button" class="custom-btn" value="Submit" onclick="validateForm()" style="cursor: pointer;"/>
+        
+    </div>
+</body>
+</html>

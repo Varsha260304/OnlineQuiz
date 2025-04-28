@@ -1,0 +1,71 @@
+<!DOCTYPE html> <!-- Defines the document type as HTML5 -->
+<html lang="en"> <!-- Starts the HTML document with English as the language -->
+<head>
+    <meta charset="UTF-8"> <!-- Sets the character encoding to (Unicode char encoding) UTF-8 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Ensures compatibility with Internet Explorer (IE) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Sets the viewport for responsiveness adjusts the screen width -->
+    <title>Login Page</Form></title> <!-- Title of the webpage -->
+    <link rel="stylesheet" href="style.css"> <!-- This is your CSS file -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- Links to Boxicons CSS -->
+    <script>
+        function goSubmit() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var usernameRegex = /^[a-zA-Z0-9]+$/;
+            var passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+
+            if (username.trim() === "") {
+                alert("Please enter a username");
+                document.getElementById("username").focus();
+                return false;
+            } else if (!usernameRegex.test(username)) {
+                alert("Username should contain only alphanumeric characters");
+                document.getElementById("username").focus();
+                return false;
+            }
+
+            if (password.trim() === "") {
+                alert("Please enter a password");
+                document.getElementById("password").focus();
+                return false;
+            } else if (!passwordRegex.test(password)) {
+                alert("Password should be at least 8 characters long with at least one uppercase letter, one special character, and one digit.");
+                document.getElementById("password").focus();
+                return false;
+            }
+
+            alert("Login Successful!!!");
+            return true;
+        }
+    </script>
+</head>
+
+
+<body>
+    
+    <div class="wrapper"> <!-- Main container for the login form -->
+        <form action=""> <!-- Form for username and password input -->
+            <h1>Login</h1> <!--Heading section-->
+            <div class="input-box"> <!-- Container for username input -->
+                <input type="text" placeholder="Username" id="username"> <!-- Username input field -->
+                <i class='bx bx-user'></i> <!-- Icon for username input -->
+            </div>
+            <div class="input-box" ;> <!-- Container for password input -->
+                <input type="password" placeholder="Password" id="password"> <!-- Password input field -->
+                <i class='bx bx-lock-alt'></i> <!-- Icon for password input -->
+            </div>
+         <!-- <div class="remember-forget">
+                <label><input type="checkbox"> Remember me</label>
+                 <a href="#">Forgot password?</a> 
+            </div>-->
+            <button type="button" class="btn" onclick="goSubmit()" style="margin-bottom: 10px;">Login</button> <!-- Login button -->
+            <div class="register-link"> <!-- Container for registration link -->
+                <p>Don't have an account? <a href="register.html">Register</a></p> <!-- Registration link -->
+            </div>
+
+        </form>
+    </div>
+        
+</body>
+</html>
+

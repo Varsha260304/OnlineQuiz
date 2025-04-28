@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topic Master</title>
+<style>
+    body {
+    font-family: Poppins, sans-serif;
+    margin: 70px; /* Remove default margin */
+    padding: 10px; /* Remove default padding */
+    border: 5px solid #3c3333bf; /* Add border around the body */
+    box-sizing: border-box; /* Include border in total width/height */
+    border-radius: 20px;
+    margin-left: 150px;
+    margin-right: 700px;
+    background: url('background/books/screen3.jpg') no-repeat; /* Background image for body */
+    background-size: cover; /* Background image covers the entire body */
+    background-position: center; /* Background image centered */
+    background-size: 100%;
+    margin-bottom: 180px;
+
+}
+.container {
+    max-width: 600px  ;
+    margin: auto ; /* Adjust top margin to move the container up */
+    font-size: 20px;
+}
+.box {
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+.box label {
+    display: block;
+    margin-top : 40px;
+}
+
+.box input[type="text"] {
+    width: 0%;
+    padding: 10px;
+    border: 0px solid #faf5f5;
+    border-radius: 25px;
+}
+.box select {
+    width: 100%; /* Enlarge the select box to fill the entire width of its container */
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 25px;
+    margin-bottom: 1px;
+
+}
+    .blank {
+        margin-bottom: 10px;
+    }
+    .blank label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .blank input[type="text"] {
+        width: 350px;
+        padding: 10px;
+        border: 1px solid #000000;
+        border-radius: 25px;
+    }
+    .custom-btn {
+        width: 100px; /* Adjust button width */
+        height: 50px; /* Adjust button height */
+        border-radius: 25px; /* Adjust border-radius to change button shape */
+        background-color: #3c3333bf; /* Button background color */
+        color: white; /* Button text color */
+        border: none; /* Remove button border */
+        text-align: center; /* Center text within the button */
+        text-decoration: none; /* Remove underline from button */
+        font-size: 19px; /* Button text font size */
+        display: block; /* Display as block to take full width */
+        margin: auto; /* Center the button horizontally */
+        margin-top: 10px;
+    }
+
+    .custom-btn:hover {
+        background-color: #000000; /* Change background color on hover */
+    }
+    .required {
+    color: red; /* You can change the color to match your design */
+    float: center top; /* Add some space between the label and the asterisk */
+}
+
+</style>
+<script>
+    function validateForm() {
+        var categoryName = document.getElementById('categoryName').value;
+        var categoryDesc = document.getElementById('categoryDesc').value;
+
+        if (categoryName === '') {
+            alert('Please select the Category');
+            document.getElementById("categoryName").focus();
+            return false; // Prevent form submission
+        }
+        else if (categoryDesc === '') {
+            alert('Please enter the Topic');
+            document.getElementById("categoryDesc").focus();
+            return false;
+        }
+
+        // Add more validation rules as needed
+        else {
+            return true;
+        }   // Allow form submission
+    }
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>Topic Master</h1>
+        <div class="box">
+            <label for="categoryName">Category:<span class="required">*</span></label>
+            <select name="categoryName" id="categoryName" >
+                <option value="">Select</option>
+                <option value="Category">Insight IQ Exam</option>
+                <option value="Category">Web Development</option>
+                <option value="Category">Programming Languages</option>
+                <option value="Category">Interview & Placement Prep</option>
+                <option value="Category">Core Companies</option>
+                <option value="Category">Daily GK</option>
+                </select>
+        </div>
+        <div class="blank">
+            <label for="categoryDesc">Topic:<span class="required">*</span></label>
+            <input type="text" id="categoryDesc" name="categoryDesc">
+        </div>
+        <button type="submit" class="custom-btn" onclick="validateForm()" style="cursor: pointer;">Submit</button>
+        
+    </div>
+</body>
+</html>

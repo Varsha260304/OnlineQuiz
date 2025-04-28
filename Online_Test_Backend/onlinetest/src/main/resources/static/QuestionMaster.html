@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question Master</title>
+<style>
+    body {
+        font-family: Poppins, sans-serif;
+        margin: 50px;
+        padding: 30px;
+        border: 5px solid #3c3333bf;
+        box-sizing: border-box;
+        border-radius: 20px;
+        background-size: cover;
+        margin-left: 50px;
+        margin-right: 450px;
+        background: url('background/books/screen3.jpg') no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    .container {
+        max-width: 600px;
+        margin: auto;
+        font-size: 20px;
+    }
+    .box {
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+    .box label {
+        display: block;
+        margin-top: 30px;
+    }
+    .box select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #000000;
+        border-radius: 25px;
+        margin-bottom: 1px;
+    }
+    .blank {
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+    .blank input {
+        width: 600px;
+        padding: 10px;
+        border: 1px solid #000000;
+        border-radius: 25px;
+        margin-top: 20px;
+    }
+    
+    .custom-btn {
+        width: 100px;
+        height: 50px;
+        border-radius: 25px;
+        background-color: #3c3333bf;
+        color: white;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        font-size: 19px;
+        display: block;
+        margin: 10px;
+        margin-left: 550px;
+    }
+    .answer, .option {
+        margin-bottom: 20px;
+        margin-top: 10px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .answer label, .option label {
+        display: block;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    .answer input[type="text"], .option input[type="text"] {
+        width: 550px;
+        padding: 10px;
+        border: 1px solid #000000;
+        border-radius: 20px;
+    }
+    .custom-btn:hover {
+        background-color: #000000;
+    }
+    .required {
+        color: red;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+    	$.ajax({
+            type: 'GET',
+            url: '/categories',
+            success: function(categories) {
+                var selectBox = $('#categoryName');
+                categories.forEach(function(categories) {
+                    selectBox.append(new Option(categories.name, categories.id));
+                });
+            },
+            error: function(error) {
+                console.error('Error fetching users:', error);
+            }
+        });
+    	
+    	
+    	 $('#categoryName').change(function() {
+             var categoryId = $(this).val();
+             if (categoryId) {
+                 $.ajax({
+                     type: 'GET',
+                     url: '/topics/' + categoryId,
+                     success: function(topics) {
+                         var selectBox = $('#categoryDesc');
+                         selectBox.empty();
+                         selectBox.append(new Option("Select", ""));
+                         topics.forEach(function(topic) {
+                             selectBox.append(new Option(topic.topic, topic.id));
+                         });
+                     },
+                     error: function(error) {
+                         console.error('Error fetching topics:', error);
+                     }
+                 });
+             } else {
+                 $('#categoryDesc').empty().append(new Option("Select", ""));
+             }
+         });
+    	 
+    });
+
+    function validateForm() {
+        var categoryName = $('#categoryName').val();
+        var categoryDesc = $('#categoryDesc').val();
+        var question = $('#question').val();
+        var option1 = $('#option1').val();
+        var option2 = $('#option2').val();
+        var option3 = $('#option3').val();
+        var option4 = $('#option4').val();
+        var canswer = $('#canswer').val();
+
+        if (categoryName.trim() === '') {
+            alert("Please select the Category");
+            $('#categoryName').focus();
+            return false;
+        } else if (categoryDesc.trim() === '') {
+            alert("Please select the Topic");
+            $('#categoryDesc').focus();
+            return false;
+        } else if (question.trim() === '') {
+            alert("Please enter the question");
+            $('#question').focus();
+            return false;
+        } else if (option1.trim() === '') {
+            alert("Please enter the option-1");
+            $('#option1').focus();
+            return false;
+        } else if (option2.trim() === '') {
+            alert("Please enter the option-2");
+            $('#option2').focus();
+            return false;
+        } else if (option3.trim() === '') {
+            alert("Please enter the option-3");
+            $('#option3').focus();
+            return false;
+        } else if (option4.trim() === '') {
+            alert("Please enter the option-4");
+            $('#option4').focus();
+            return false;
+        } else if (canswer.trim() === '' || ![option1, option2, option3, option4].includes(canswer)) {
+            alert("Please enter a valid Correct Answer from the provided options.");
+            $('#canswer').focus();
+            return false;
+        } else {
+            var data = {
+                category: categoryName,
+                topic: categoryDesc,
+                question: question,
+                option1: option1,
+                option2: option2,
+                option3: option3,
+                option4: option4,
+                answer: canswer
+            };
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/questions',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    console.log('AJAX Success:', response);
+                    alert('Question added successfully');
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                    console.log('Status:', status);
+                    console.log('XHR:', xhr);
+                    alert('Failed to add question. Please try again. Status: ' + status + ', Error: ' + error + ', Response: ' + xhr.responseText);
+                }
+            });
+            return false;
+        }
+    }
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>Question Master</h1>
+        <div class="box">
+            <label for="categoryName">Category:<span class="required">*</span></label>
+            <select name="option" id="categoryName">
+                <option value="">Select</option>
+            </select>
+        </div>
+        <div class="box">
+            <label for="categoryDesc">Topic:<span class="required">*</span></label>
+            <select name="option" id="categoryDesc">
+                <option value="">Select</option>
+            </select>
+        </div>
+        <div class="blank">
+            <label for="question">Question:<span class="required">*</span></label>
+            <input type="text" id="question" name="question">
+        </div>
+        <div class="option">
+            <label for="option1">Option 1:<span class="required">*</span></label>
+            <input type="text" id="option1" name="option1">
+            <label for="option2">Option 2:<span class="required">*</span></label>
+            <input type="text" id="option2" name="option2">
+            <label for="option3">Option 3:<span class="required">*</span></label>
+            <input type="text" id="option3" name="option3">
+            <label for="option4">Option 4:<span class="required">*</span></label>
+            <input type="text" id="option4" name="option4">
+        </div>
+        <div class="answer">
+            <label for="canswer">Correct Answer:<span class="required">*</span></label>
+            <input type="text" id="canswer" name="canswer">
+        </div>
+        <input type="button" class="custom-btn" value="Submit" onclick="validateForm()">
+    </div>
+</body>
+</html>

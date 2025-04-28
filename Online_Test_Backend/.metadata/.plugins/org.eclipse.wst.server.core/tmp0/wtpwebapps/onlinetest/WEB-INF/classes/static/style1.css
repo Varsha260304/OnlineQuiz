@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+* {
+    margin: 0; /*Resets margin for all elements*/
+    padding:0; /*Resets padding for all elements*/
+    box-sizing: border-box; /*Box-sizing for consistent sizing including padding and border*/
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;  /*Uses flexbox for layout */
+    justify-content: center; /*Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    min-height: 100vh; /* Minimum height of viewport*/
+    background: url('background/books/image.png') ; /* Background image for body */
+    height: 100%;
+    background-size: cover; /* Background image covers the entire body */
+    background-position: center; /* Background image centered */
+}
+
+.wrapper {
+    width: 420px; /* Width of the login form container */
+    height: 550px; /*Height of the login form container */
+    background: transparent; /* Transparent background for the form container */
+    border: 2px solid rgba(168, 142, 142, 0.342); /* Border style for the form container */
+    backdrop-filter: blur(20px); /*Blurred background effect*/
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2); /*Box shadow for the form container */
+    color: rgb(16, 18, 38); /* Text color for the form */
+    border-radius: 10px;/* Border radius for the form container*/
+    padding: 10px 20px; /* Padding inside the form container */
+}
+
+.wrapper h1 {
+    font-size: 36px;/* Font size for the form heading */
+    text-align: center; /* Center alignment for the form heading */
+}
+
+.wrapper .input-box {
+    position: relative; /* Relative positioning for input boxes*/
+    width: 100%; /* Full width for input boxes*/
+    height: 20px; /* Height of input boxes */
+    margin: 30px 0; /*Margin around input boxes */
+}
+
+.input-box input { /* Styles for input fields */
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(12, 9, 18, 0.995);
+    border-radius: 100px;
+    font-size: 16px;
+    color: #fff;
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box input::placeholder { /* Styles for input field placeholders */
+    color: #fff;
+}
+
+
+.input-box i { /* Styles for icons inside input boxes */
+    position:absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-150%);
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.wrapper .btn {  /* Styles for the login button */
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    border: none;
+    outline:none;
+    border-radius: 60px;
+    box-shadow: 0 0 10px  rgba(29, 28, 31, 0.995);
+    cursor:pointer;
+    font-size: 16px;
+    color: #131212;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.wrapper .register-link {  /* Styles for the registration link */
+    font-size: 14.5px;
+    text-align: center;
+    margin-top: 20px 0 15px;
+    color: rgb(255, 254, 254);
+
+}
+
+.register-link p a { /* Styles for the registration link text */
+    color: rgb(255, 254, 254);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.register-link p a:hover { /* Styles for the registration link text on hover */
+    text-decoration: underline;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .result-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .result-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .result-container p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Quiz Results</h1>
+        <p id="totalQuestions"></p>
+        <p id="correctAnswers"></p>
+        <p id="percentage"></p>
+        <a href="welcome.html" class="home-btn">Back to Home</a>
+    </div>
+	
+    <script>
+        $(document).ready(function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var totalQuestions = urlParams.get('total');
+            var correctAnswers = urlParams.get('correct');
+            var percentage = urlParams.get('percentage');
+
+            $('#totalQuestions').text('Total Questions: ' + totalQuestions);
+            $('#correctAnswers').text('Correct Answers: ' + correctAnswers);
+            $('#percentage').text('Percentage: ' + percentage + '%');
+        });
+    </script>
+</body>
+</html>

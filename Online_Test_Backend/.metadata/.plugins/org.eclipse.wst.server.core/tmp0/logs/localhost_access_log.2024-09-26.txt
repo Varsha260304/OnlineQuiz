@@ -1,0 +1,4 @@
+127.0.0.1 - - [26/Sep/2024:22:18:38 +0530] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [26/Sep/2024:22:18:41 +0530] "GET /web-services/WEB-INF/classes/com/onlinetest/controller/CategoryController.java HTTP/1.1" 404 682
+0:0:0:0:0:0:0:1 - - [26/Sep/2024:22:18:41 +0530] "GET /favicon.ico HTTP/1.1" 404 762
+127.0.0.1 - - [26/Sep/2024:22:19:22 +0530] "GET / HTTP/1.1" 404 751

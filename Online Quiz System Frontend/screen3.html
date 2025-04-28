@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question Master</title>
+<style>
+    body {
+    font-family: Poppins, sans-serif;
+    margin: 50px; /* Remove default margin */
+    padding: 30px; /* Remove default padding */
+    border: 5px solid #3c3333bf; /* Add border around the body */
+    box-sizing: border-box; /* Include border in total width/height */
+    border-radius: 20px;
+    background-size: cover;
+    margin-left: 50px;
+    margin-right: 450px;
+    background: url('background/books/screen3.jpg') no-repeat; /* Background image for body */
+    background-size: cover; /* Background image covers the entire body */
+    background-position: center; /* Background image centered */
+}
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        font-size: 20px;
+    }
+    .box {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.box label {
+    display: block;
+    margin-top : 30px;
+}
+
+.box input[type="text"] {
+    width: 0%;
+    padding: 0px;
+    border: 0px solid #faf5f5;
+    border-radius: 25px;
+}
+.box select {
+    width: 100%; /* Enlarge the select box to fill the entire width of its container */
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 25px;
+    margin-bottom: 1px;
+
+}
+
+  .blank {
+   margin-bottom:20px ;
+   font-weight: bold;
+}
+
+.blank input{
+    width: 600px;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 25px;
+    margin-top: 20px;
+    
+}
+
+
+
+    .custom-btn {
+        width: 100px; /* Adjust button width */
+        height: 50px; /* Adjust button height */
+        border-radius: 25px; /* Adjust border-radius to change button shape */
+        background-color: #3c3333bf; /* Button background color */
+        color: white; /* Button text color */
+        border: none; /* Remove button border */
+        text-align: center; /* Center text within the button */
+        text-decoration: none; /* Remove underline from button */
+        font-size: 19px; /* Button text font size */
+        display: block; /* Display as block to take full width */
+        margin: 10px; /* Center the button horizontally */
+        margin-left: 550PX;
+    }
+   
+
+.answer {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+   
+}
+
+.answer label {
+    display: block;
+    margin-bottom: 10px; /* Reduced margin for Correct Answer label */
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.answer input[type="text"] {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 20px;
+}
+.option {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+   
+}
+
+.option label {
+    display: block;
+    margin-right: 10px; /* Reduced margin for Correct Answer label */
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.option input[type="text"] {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 20px;
+}
+
+
+
+    .custom-btn:hover {
+        background-color: #000000; /* Change background color on hover */
+    }
+    .result {
+        margin-top: 20px;
+        font-weight: bold;
+        display: none; /* Hide the result initially */
+    }
+    .required {
+    color: red; /* You can change the color to match your design */
+    float: center top; /* Add some space between the label and the asterisk */
+}
+
+</style>
+<script>
+    function validateForm() {
+        var categoryN = document.getElementById("categoryName");
+        var categoryName = categoryN.value;
+ 
+        var categoryD = document.getElementById("categoryDesc");
+        var categoryDesc = categoryD.value;
+
+        var Question = document.getElementById("question");
+        var question = Question.value;
+
+        var Option1 = document.getElementById("option1");
+        var option1 = Option1.value;
+
+        var Option2 = document.getElementById("option2");
+        var option2 = Option2.value;
+
+        var Option3 = document.getElementById("option3");
+        var option3 = Option3.value;
+
+        var Option4 = document.getElementById("option4");
+        var option4 = Option4.value;
+
+        var Answer = document.getElementById("canswer");
+        var canswer = Answer.value;
+
+
+        if (categoryName.trim() === '') {
+            alert("Please select the Category");
+            document.getElementById("categoryName").focus();
+            return false;
+        }
+        else if (categoryDesc.trim() === '') {
+            alert("Please select the Topic");
+            document.getElementById("categoryDesc").focus();
+            return false;
+        }
+        else if (question.trim() === '') {
+            alert("Please enter the question");
+            document.getElementById("question").focus();
+            return false;
+        }
+        else if (option1.trim() === '') {
+            alert("Please enter the option-1");
+            document.getElementById("option1").focus();
+            return false;
+        }
+        else if (option2.trim() === '') {
+            alert("Please enter the option-2");
+            document.getElementById("option2").focus();
+            return false;
+        }
+        else if (option3.trim() === '') {
+            alert("Please enter the option-3");
+            document.getElementById("option3").focus();
+            return false;
+        }
+        else if (option4.trim() === '') {
+            alert("Please enter the option-4");
+            document.getElementById("option4").focus();
+            return false;
+        }
+        else if (canswer.trim() === '') {
+            alert("Please enter the Correct Answer");
+            document.getElementById("canswer").focus();
+            return false;
+        }
+        if (canswer.trim() === '' || ![option1, option2, option3, option4].includes(canswer)) {
+        alert("Please enter a valid Correct Answer from the provided options.");
+        document.getElementById("canswer").focus();
+        return false;
+        }
+        else
+        {   
+            if (option1==canswer){
+            document.getElementById("option1").focus();
+        }
+        else if (option2==canswer){
+            document.getElementById("option2").focus();
+        }
+        else if (option2==canswer){
+            document.getElementById("option3").focus();
+        }
+        else {
+            document.getElementById("option4").focus();
+        }
+            
+            return true; // Form is valid, allow submission
+        }
+        
+    }
+</script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Question Master</h1>
+        <div class="box">
+            <label for="categoryName">Category:<span class="required">*</span></label>
+            <select name="option" id="categoryName">
+                <option value="">Select</option>
+                <option value="Category">Insight IQ Exam</option>
+                <option value="Category">Web Development</option>
+                <option value="Category">Programming Languages</option>
+                <option value="Category">Interview & Placement Prep</option>
+                <option value="Category">Core Companies</option>
+                <option value="Category">Daily GK</option>
+            </select>
+        </div>
+        <div class="box">
+            <label for="categoryDesc">Topic:<span class="required">*</span></label>
+            <select name="option" id="categoryDesc">
+                <option value="">Select</option>
+                <option value="Category-1">Problem Solving</option>
+                <option value="Category-1">Aptitude Tests</option>
+                <option value="Category-1">Reasoning</option>
+                <option value="Category-1">Personality Assessments</option>
+                </select>
+        </div>
+        <div class="blank">
+            <label for="Question">Question:<span class="required">*</span></label>
+            <input type="text" id="question" name="question">
+        </div>
+        <div class="option">
+            <label for="Option 1" style="display: inline; ">option-1<span class="required">*</span></label>
+            <input type="text" id="option1" name="option1" style=" margin: 10px;">
+            <br><label for="Option 2" style="display: inline;">option-2<span class="required">*</span></label>
+            <input type="text" id="option2" name="option2" style=" margin: 10px;"><br>
+            <label for="Option 3" style="display: inline;">option-3<span class="required">*</span></label>
+            <input type="text" id="option3" name="option3" style=" margin: 10px;"><br>
+            <label for="Option 4" style="display: inline;">option-4<span class="required">*</span></label>
+            <input type="text" id="option4" name="option4" style=" margin: 10px;">
+    </div>
+        <div class="answer">
+            <label for="Correct Answer">Correct Answer:<span class="required">*</span></label>
+            <input type="text" id="canswer" name="canswer">
+        </div>
+        <input type="button" class="custom-btn" value="Submit" onclick="validateForm()" style="cursor: pointer;"/>
+    </div>
+</body>
+</html>

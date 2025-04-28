@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        .option {
+            margin-bottom: 10px;
+        }
+
+        .option label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .submit-btn, .next-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover, .next-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .next-btn {
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz</h1>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <button class="submit-btn" onclick="submitQuiz()" style="display: none;">Submit</button>
+        <button class="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var quizData = [];
+            var currentQuestionIndex = 0;
+            var selectedOptions = [];
+
+            function fetchQuiz() {
+                var urlParams = new URLSearchParams(window.location.search);
+                var topicId = urlParams.get('topic');
+
+                if (topicId) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/questions/' + topicId,
+                        success: function(data) {
+                            if (data && data.length > 0) {
+                                quizData = data;
+                                showQuestion(currentQuestionIndex);
+                            } else {
+                                console.error('Invalid quiz data format or no questions returned:', data);
+                                $('#question').text('Error: No questions found.');
+                                $('#options').empty();
+                                $('.submit-btn, .next-btn').hide();
+                            }
+                        },
+                        error: function(error) {
+                            console.error('Error fetching quiz data:', error);
+                            $('#question').text('Error fetching quiz data. Please try again later.');
+                            $('#options').empty();
+                            $('.submit-btn, .next-btn').hide();
+                        }
+                    });
+                } else {
+                    console.error('Topic ID not found in URL parameter');
+                    $('#question').text('Error: Topic ID not found.');
+                    $('#options').empty();
+                    $('.submit-btn, .next-btn').hide();
+                }
+            }
+
+            function showQuestion(index) {
+                $('#question').text(quizData[index].question);
+
+                var optionsContainer = $('#options');
+                optionsContainer.empty();
+
+                var options = [
+                    quizData[index].option1,
+                    quizData[index].option2,
+                    quizData[index].option3,
+                    quizData[index].option4
+                ];
+
+                options.forEach(function(option, optionIndex) {
+                    var optionHtml = '<div class="option"><input type="radio" id="option' + optionIndex + '" name="option" value="' + option + '"><label for="option' + optionIndex + '">' + option + '</label></div>';
+                    optionsContainer.append(optionHtml);
+                });
+
+                if (index === quizData.length - 1) {
+                    $('.next-btn').hide();
+                    $('.submit-btn').show();
+                } else {
+                    $('.next-btn').show();
+                    $('.submit-btn').hide();
+                }
+            }
+
+            window.nextQuestion = function() {
+                var selectedOption = $('input[name="option"]:checked').val();
+                if (selectedOption) {
+                    selectedOptions[currentQuestionIndex] = selectedOption;
+                    currentQuestionIndex++;
+                    showQuestion(currentQuestionIndex);
+                } else {
+                    alert('Please select an option.');
+                }
+            };
+
+            window.submitQuiz = function() {
+                var selectedOption = $('input[name="option"]:checked').val();
+                if (selectedOption) {
+                    selectedOptions[currentQuestionIndex] = selectedOption;
+                    
+                    var correctCount = 0;
+                    quizData.forEach((question, index) => {
+                        if (selectedOptions[index] === question.answer) {
+                            correctCount++;
+                        }
+                    });
+
+                    var totalQuestions = quizData.length;
+                    var percentage = (correctCount / totalQuestions) * 100;
+                    
+                    var urlParams = new URLSearchParams(window.location.search);
+                    var topicId = urlParams.get('topic');
+                    window.location.href = 'result.html?topic=' + topicId + '&correct=' + correctCount + '&total=' + totalQuestions + '&percentage=' + percentage.toFixed(2);
+                } else {
+                    alert('Please select an option.');
+                }
+            };
+
+            fetchQuiz();
+        });
+    </script>
+</body>
+</html>

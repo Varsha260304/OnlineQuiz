@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Management System</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            background-image: url('background/books/screen3.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .grid-item {
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #ffffff;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-item h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .grid-item ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        .grid-item ul li {
+            margin-bottom: 5px;
+            color: #666;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Quiz Management System</h1>
+        <div class="grid-container" id="grid-container">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Fetch categories
+            $.ajax({
+                type: 'GET',
+                url: '/categories',
+                success: function(categories) {
+                    categories.forEach(function(category) {
+                        // Create category widget
+                        var categoryWidget = $('<div class="grid-item"></div>');
+                        categoryWidget.attr('data-category-id', category.id); // Add data attribute for category ID
+                        categoryWidget.append('<h3>' + category.name + '</h3>');
+
+                        // Fetch topics for this category
+                        $.ajax({
+                            type: 'GET',
+                            url: '/topics/' + category.id,
+                            success: function(topics) {
+                                var topicList = $('<ul></ul>');
+                                topics.forEach(function(topic) {
+                                    var topicItem = $('<li>' + topic.topic + '</li>');
+                                    topicItem.attr('data-topic-id', topic.id); // Add data attribute for topic ID
+                                    topicList.append(topicItem);
+                                });
+                                categoryWidget.append(topicList);
+                            },
+                            error: function(error) {
+                                console.error('Error fetching topics:', error);
+                            }
+                        });
+
+                        // Append category widget to grid container
+                        $('#grid-container').append(categoryWidget);
+                    });
+
+                    // Handle click on a topic item
+                    $('#grid-container').on('click', 'li', function() {
+                        var topicId = $(this).attr('data-topic-id');
+                        if (topicId) {
+                            // Redirect to the quiz page passing the topic ID as a parameter
+                            window.location.href = 'quiz.html?topic=' + topicId;
+                        }
+                    });
+                },
+                error: function(error) {
+                    console.error('Error fetching categories:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
